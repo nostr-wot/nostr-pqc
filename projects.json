@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "nostr-pqc",
+  "description": "Index of post-quantum cryptography (PQC) work in the Nostr protocol.",
+  "homepage": "https://github.com/nostr-wot/nostr-pqc",
+  "license": "MIT",
+  "note": "Status values: shipped | published | experimental | discussion | closed. Protects values: confidentiality | authenticity. Approach values: hybrid | replacement | n-a.",
+  "projects": [
+    {
+      "id": "nostr-wot-extension",
+      "name": "Nostr WoT Extension",
+      "repository": "https://github.com/nostr-wot/nostr-wot-extension",
+      "homepage": "https://nostr-wot.com",
+      "layer": "client",
+      "language": "TypeScript",
+      "license": "MIT",
+      "version": "0.4.0",
+      "status": "shipped",
+      "protects": ["confidentiality"],
+      "approach": "hybrid",
+      "algorithms": ["ML-KEM-1024", "ML-DSA-87"],
+      "standards": ["FIPS 203", "FIPS 204", "NIP-06", "NIP-07", "NIP-17", "NIP-44", "NIP-59"],
+      "implementation": [
+        "Derives ML-KEM-1024 and ML-DSA-87 keys from the BIP-39 seed as siblings of the secp256k1 key, via domain-separated HKDF-SHA256",
+        "Publishes a kind:10203 attestation advertising the post-quantum public keys",
+        "ML-DSA proof of possession binding the npub to both public keys",
+        "Post-quantum direct messages over NIP-44 + NIP-59, hybrid with the NIP-44 conversation key",
+        "Additive NIP-07 surface: encrypt(pubkey, plaintext, { scheme: 'pq', recipientKemKey })",
+        "Offline CLI (npm run pqc:keygen) that derives keys and prints a signed attestation without a browser",
+        "New identities generated with 24 words so the seed is not the weakest link"
+      ],
+      "notes": "First Nostr signer to ship post-quantum keys to end users. Requires no relay changes."
+    },
+    {
+      "id": "nostr-wot-pq",
+      "name": "@nostr-wot/pq",
+      "repository": "https://github.com/nostr-wot/nostr-wot-sdk/tree/main/packages/pq",
+      "package": "https://www.npmjs.com/package/@nostr-wot/pq",
+      "layer": "library",
+      "language": "TypeScript",
+      "license": "MIT",
+      "version": "0.2.0",
+      "status": "published",
+      "protects": ["confidentiality"],
+      "approach": "hybrid",
+      "algorithms": ["ML-KEM-1024", "ML-DSA-87", "XChaCha20-Poly1305"],
+      "standards": ["FIPS 203", "FIPS 204", "NIP-06", "NIP-17", "NIP-44", "NIP-59"],
+      "implementation": [
+        "derivePqKeys: NIP-06 seed to ML-KEM-1024 + ML-DSA-87 keypairs",
+        "kind:10203 attestation build, parse and verify with typed problem codes",
+        "Self-describing versioned message envelope: 1-byte version, 1-byte alg, 1568-byte ML-KEM ciphertext, 24-byte nonce, AEAD-sealed padded plaintext",
+        "hybridKey: HKDF combination of the KEM secret with the NIP-44 conversation key",
+        "createPqDirectMessage / openPqDirectMessage: NIP-17 rumor sealed and gift-wrapped per NIP-59, envelope placed at the seal layer",
+        "Authenticated framing: version, algorithm and both pubkeys in the AEAD associated data",
+        "NIP-44 length padding and a single generic decryption error"
+      ],
+      "overhead": {
+        "constant_bytes": 3072,
+        "typical_ratio": 2.4,
+        "attestation_bytes": 12200,
+        "measured_on": "complete kind:1059 gift wrap as serialized for a relay"
+      },
+      "notes": "Reference implementation responding to nostr-protocol/nips#1971. Rides inside unchanged NIP-59 gift wrap, so relays need no changes."
+    },
+    {
+      "id": "dart-ndk-qs",
+      "name": "Dart NDK quantum-secure signer",
+      "repository": "https://github.com/relaystr/ndk",
+      "package": "https://pub.dev/packages/ndk",
+      "layer": "library",
+      "language": "Dart",
+      "status": "experimental",
+      "protects": ["authenticity"],
+      "approach": "replacement",
+      "algorithms": ["CRYSTALS-Dilithium-2", "CRYSTALS-Dilithium-3", "CRYSTALS-Dilithium-5"],
+      "standards": [],
+      "implementation": [
+        "QsRustEventSigner / QsRustEventVerifier over native Rust FFI using the crystals-dilithium crate",
+        "Selectable security level 2, 3 or 5 (~AES-128 / ~AES-192 / ~AES-256)",
+        "Replaces BIP-340 Schnorr event signatures rather than augmenting them"
+      ],
+      "notes": "Published as a demo to provoke ecosystem discussion, not as a production identity scheme. Targets the authenticity half of the problem, complementary to the KEM work."
+    },
+    {
+      "id": "nips-1971",
+      "name": "NIP-44 post-quantum security",
+      "repository": "https://github.com/nostr-protocol/nips/issues/1971",
+      "layer": "specification",
+      "status": "discussion",
+      "author": "paulmillr",
+      "opened": "2025-07-10",
+      "protects": ["confidentiality"],
+      "approach": "hybrid",
+      "algorithms": ["ML-KEM", "sntrup761", "HQC"],
+      "implementation": [
+        "Argues for hybrid ECDH + KEM constructions rather than outright replacement",
+        "Open questions: where post-quantum public keys are stored and discovered, and application beyond DMs"
+      ],
+      "notes": "The canonical discussion thread for post-quantum Nostr encryption."
+    },
+    {
+      "id": "nip-101",
+      "name": "NIP-101 Algorithm Transition for Signatures and Encryption",
+      "repository": "https://github.com/nostr-protocol/nips/pull/391",
+      "layer": "specification",
+      "status": "closed",
+      "author": "eznix86",
+      "closed": "2025-05-22",
+      "protects": ["authenticity", "confidentiality"],
+      "approach": "n-a",
+      "algorithms": ["Falcon", "SPHINCS+"],
+      "implementation": [
+        "Generic framework for transitioning Nostr cryptographic algorithms without breaking compatibility"
+      ],
+      "notes": "Closed. The discussion is the useful artifact: signatures judged non-urgent, encryption urgent due to harvest-now-decrypt-later."
+    },
+    {
+      "id": "noble-post-quantum",
+      "name": "@noble/post-quantum",
+      "repository": "https://github.com/paulmillr/noble-post-quantum",
+      "layer": "primitives",
+      "language": "TypeScript",
+      "license": "MIT",
+      "status": "published",
+      "protects": ["confidentiality", "authenticity"],
+      "approach": "n-a",
+      "algorithms": ["ML-KEM", "ML-DSA", "SLH-DSA"],
+      "standards": ["FIPS 203", "FIPS 204", "FIPS 205"],
+      "implementation": [
+        "Auditable, dependency-light NIST post-quantum primitives used by the JavaScript Nostr implementations indexed here"
+      ]
+    }
+  ],
+  "adjacent": [
+    {
+      "id": "nostr-double-ratchet",
+      "name": "nostr-double-ratchet",
+      "repository": "https://github.com/mmalmi/nostr-double-ratchet",
+      "post_quantum": false,
+      "reason": "Signal double ratchet over NIP-44 giving forward secrecy and post-compromise recovery, but entirely classical elliptic-curve cryptography. Frequently miscited as quantum protection; forward secrecy does not help against an adversary who breaks the underlying curve."
+    }
+  ]
+}
