@@ -4,7 +4,7 @@ This is an index of post-quantum cryptography work in Nostr. It aims to be **com
 
 ## Adding a project
 
-Open a pull request editing **both** `README.md` and `projects.json`. An entry needs:
+Open a pull request editing `README.md`, the relevant page under `docs/`, and `projects.json`. An entry needs:
 
 1. **A link to source code.** A website or a blog post is not enough — an entry nobody can check is not an entry.
 2. **Which problem it addresses.** Confidentiality (a KEM, protecting against harvest-now-decrypt-later), authenticity (a signature scheme, protecting against forgery), or both. This is the single most important field, because the two have completely different deadlines.

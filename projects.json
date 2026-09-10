@@ -15,11 +15,32 @@
       "language": "TypeScript",
       "license": "MIT",
       "version": "0.4.0",
+      "pending_version": "0.7.0",
+      "pending_store_publication": true,
+      "pending_implementation": [
+        "Import independent PQ key pairs into existing Nostr accounts; retain a separate backup",
+        "Export and restore plain or password-encrypted PQ key files in Settings",
+        "Import encrypted seed JSON backups in the account wizard; PQ-only files require an existing classical account",
+        "Encrypted backup envelope is extension-specific AES-256-GCM with PBKDF2-SHA-256, distinct from NIP-49"
+      ],
       "status": "shipped",
-      "protects": ["confidentiality"],
+      "protects": [
+        "confidentiality"
+      ],
       "approach": "hybrid",
-      "algorithms": ["ML-KEM-1024", "ML-DSA-87"],
-      "standards": ["FIPS 203", "FIPS 204", "NIP-06", "NIP-07", "NIP-17", "NIP-44", "NIP-59"],
+      "algorithms": [
+        "ML-KEM-1024",
+        "ML-DSA-87"
+      ],
+      "standards": [
+        "FIPS 203",
+        "FIPS 204",
+        "NIP-06",
+        "NIP-07",
+        "NIP-17",
+        "NIP-44",
+        "NIP-59"
+      ],
       "implementation": [
         "Derives ML-KEM-1024 and ML-DSA-87 keys from the BIP-39 seed as siblings of the secp256k1 key, via domain-separated HKDF-SHA256",
         "Publishes a kind:10203 attestation advertising the post-quantum public keys",
@@ -41,10 +62,23 @@
       "license": "MIT",
       "version": "0.2.0",
       "status": "published",
-      "protects": ["confidentiality"],
+      "protects": [
+        "confidentiality"
+      ],
       "approach": "hybrid",
-      "algorithms": ["ML-KEM-1024", "ML-DSA-87", "XChaCha20-Poly1305"],
-      "standards": ["FIPS 203", "FIPS 204", "NIP-06", "NIP-17", "NIP-44", "NIP-59"],
+      "algorithms": [
+        "ML-KEM-1024",
+        "ML-DSA-87",
+        "XChaCha20-Poly1305"
+      ],
+      "standards": [
+        "FIPS 203",
+        "FIPS 204",
+        "NIP-06",
+        "NIP-17",
+        "NIP-44",
+        "NIP-59"
+      ],
       "implementation": [
         "derivePqKeys: NIP-06 seed to ML-KEM-1024 + ML-DSA-87 keypairs",
         "kind:10203 attestation build, parse and verify with typed problem codes",
@@ -64,22 +98,98 @@
     },
     {
       "id": "dart-ndk-qs",
-      "name": "Dart NDK quantum-secure signer",
+      "name": "Dart NDK PQ encryption and experimental signer",
       "repository": "https://github.com/relaystr/ndk",
       "package": "https://pub.dev/packages/ndk",
       "layer": "library",
       "language": "Dart",
       "status": "experimental",
-      "protects": ["authenticity"],
-      "approach": "replacement",
-      "algorithms": ["CRYSTALS-Dilithium-2", "CRYSTALS-Dilithium-3", "CRYSTALS-Dilithium-5"],
-      "standards": [],
-      "implementation": [
-        "QsRustEventSigner / QsRustEventVerifier over native Rust FFI using the crystals-dilithium crate",
-        "Selectable security level 2, 3 or 5 (~AES-128 / ~AES-192 / ~AES-256)",
-        "Replaces BIP-340 Schnorr event signatures rather than augmenting them"
+      "protects": [
+        "confidentiality",
+        "authenticity"
       ],
-      "notes": "Published as a demo to provoke ecosystem discussion, not as a production identity scheme. Targets the authenticity half of the problem, complementary to the KEM work."
+      "approach": "hybrid",
+      "algorithms": [
+        "ML-KEM-1024",
+        "ML-DSA-44",
+        "ML-DSA-65",
+        "ML-DSA-87"
+      ],
+      "standards": [
+        "FIPS 203",
+        "FIPS 204"
+      ],
+      "implementation": [
+        "Hybrid ML-KEM-1024 DM encryption through Rust FFI and PqEncryption Dart API",
+        "ML-DSA replaces legacy Dilithium in the experimental signature API",
+        "Includes a vector opening a TypeScript @nostr-wot/pq envelope"
+      ],
+      "notes": "PRs #712 and #713 by leonacostaok merged August 18, 2026. Hybrid describes encryption; the experimental event signer is a signature replacement. Not a ratified Nostr standard."
+    },
+    {
+      "id": "nymchat",
+      "name": "Nymchat",
+      "repository": "https://github.com/Spl0itable/NYM",
+      "homepage": "https://nymchat.app",
+      "layer": "client",
+      "status": "shipped",
+      "protects": [
+        "confidentiality"
+      ],
+      "approach": "hybrid",
+      "algorithms": [
+        "ML-KEM-768",
+        "ChaCha20-Poly1305"
+      ],
+      "implementation": [
+        "Hybrid PQ private/group messaging; pq2 wraps NIP-44 ciphertext",
+        "Key discovery through kind:30078 with d=nym-pq"
+      ],
+      "notes": "Public implementation and tests inspected, not executed or security-audited. Distinct wire format from @nostr-wot/pq; classical Nostr signatures remain."
+    },
+    {
+      "id": "claudeway",
+      "name": "Claudeway",
+      "repository": "https://github.com/JordanNewell/claudeway",
+      "layer": "application",
+      "language": "Python",
+      "license": "MIT",
+      "status": "published",
+      "protects": [
+        "authenticity"
+      ],
+      "approach": "n-a",
+      "algorithms": [
+        "ML-DSA-65"
+      ],
+      "implementation": [
+        "Optional dilithium-py receipt-signing backend",
+        "Signed application receipts transported inside kind:30078 events"
+      ],
+      "notes": "PQ signatures apply to receipts, not the outer Schnorr-signed Nostr event. Trusted key binding is separate. Optional PQ tests inspected, not executed."
+    },
+    {
+      "id": "x0x-nostr-bridge",
+      "name": "x0x Nostr bridge",
+      "repository": "https://github.com/saorsa-labs/x0x-nostr-bridge",
+      "layer": "transport",
+      "language": "Rust",
+      "license": "MIT OR Apache-2.0",
+      "status": "experimental",
+      "protects": [
+        "confidentiality",
+        "authenticity"
+      ],
+      "approach": "n-a",
+      "algorithms": [
+        "ML-KEM-768 (underlying x0x transport)",
+        "ML-DSA-65 (underlying x0x identity/signatures)"
+      ],
+      "implementation": [
+        "Nostr relay facade forwarding events via local x0xd REST/streaming API",
+        "Preserves classical Nostr event validation over the mesh"
+      ],
+      "notes": "Protection scope is the underlying mesh, not automatic end-to-end PQ Nostr DM encryption or replacement of Nostr signatures. Public adapter and adversarial tests inspected; no security certification."
     },
     {
       "id": "nips-1971",
@@ -89,9 +199,15 @@
       "status": "discussion",
       "author": "paulmillr",
       "opened": "2025-07-10",
-      "protects": ["confidentiality"],
+      "protects": [
+        "confidentiality"
+      ],
       "approach": "hybrid",
-      "algorithms": ["ML-KEM", "sntrup761", "HQC"],
+      "algorithms": [
+        "ML-KEM",
+        "sntrup761",
+        "HQC"
+      ],
       "implementation": [
         "Argues for hybrid ECDH + KEM constructions rather than outright replacement",
         "Open questions: where post-quantum public keys are stored and discovered, and application beyond DMs"
@@ -106,9 +222,15 @@
       "status": "closed",
       "author": "eznix86",
       "closed": "2025-05-22",
-      "protects": ["authenticity", "confidentiality"],
+      "protects": [
+        "authenticity",
+        "confidentiality"
+      ],
       "approach": "n-a",
-      "algorithms": ["Falcon", "SPHINCS+"],
+      "algorithms": [
+        "Falcon",
+        "SPHINCS+"
+      ],
       "implementation": [
         "Generic framework for transitioning Nostr cryptographic algorithms without breaking compatibility"
       ],
@@ -122,10 +244,21 @@
       "language": "TypeScript",
       "license": "MIT",
       "status": "published",
-      "protects": ["confidentiality", "authenticity"],
+      "protects": [
+        "confidentiality",
+        "authenticity"
+      ],
       "approach": "n-a",
-      "algorithms": ["ML-KEM", "ML-DSA", "SLH-DSA"],
-      "standards": ["FIPS 203", "FIPS 204", "FIPS 205"],
+      "algorithms": [
+        "ML-KEM",
+        "ML-DSA",
+        "SLH-DSA"
+      ],
+      "standards": [
+        "FIPS 203",
+        "FIPS 204",
+        "FIPS 205"
+      ],
       "implementation": [
         "Auditable, dependency-light NIST post-quantum primitives used by the JavaScript Nostr implementations indexed here"
       ]
