@@ -25,6 +25,10 @@ Encryption protects message confidentiality. Signatures protect identity and eve
 authenticity. These need different migration strategies; see the
 [short explanation](docs/faq.md#encryption-and-signatures).
 
+## NIP drafts
+
+Protocol proposals live in [nip-drafts/](nip-drafts/README.md), including the [complexity, payload-size and interoperability audit](nip-drafts/AUDIT.md). Drafts 05-06 are unimplemented designs for review.
+
 ## Guides
 
 - [Implementations](docs/implementations.md) — capabilities, wire format and size measurements.

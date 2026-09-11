@@ -1,0 +1,65 @@
+{
+  "model": "ASCII text; one recipient p tag; fixed 10-digit timestamps; exact-length mock ciphertext/signatures; uncompressed client EVENT JSON; no network, keys or publication",
+  "rows": [
+    {
+      "text_bytes": 1,
+      "classical_wire": 1711,
+      "hybrid_wire": 4615,
+      "extra_bytes": 2904,
+      "ratio": 2.7
+    },
+    {
+      "text_bytes": 32,
+      "classical_wire": 1711,
+      "hybrid_wire": 4615,
+      "extra_bytes": 2904,
+      "ratio": 2.7
+    },
+    {
+      "text_bytes": 280,
+      "classical_wire": 2567,
+      "hybrid_wire": 5295,
+      "extra_bytes": 2728,
+      "ratio": 2.06
+    },
+    {
+      "text_bytes": 1024,
+      "classical_wire": 3931,
+      "hybrid_wire": 7343,
+      "extra_bytes": 3412,
+      "ratio": 1.87
+    },
+    {
+      "text_bytes": 4096,
+      "classical_wire": 11439,
+      "hybrid_wire": 14171,
+      "extra_bytes": 2732,
+      "ratio": 1.24
+    },
+    {
+      "text_bytes": 16384,
+      "classical_wire": 38747,
+      "hybrid_wire": 44207,
+      "extra_bytes": 5460,
+      "ratio": 1.14
+    },
+    {
+      "text_bytes": 32000,
+      "classical_wire": 66055,
+      "hybrid_wire": 66055,
+      "extra_bytes": 0,
+      "ratio": 1
+    }
+  ],
+  "public_event": {
+    "classical": 632,
+    "hybrid": 6907,
+    "extra": 6275,
+    "proof_base64": 6172
+  },
+  "attestation_wire": 12210,
+  "old_65535_outer_limit_max_text": {
+    "classical": 40682,
+    "hybrid": 40682
+  }
+}
