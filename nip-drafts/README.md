@@ -10,6 +10,8 @@ Read the [complexity, sizing and interoperability audit](AUDIT.md) before implem
 
 Start with the [illustrated suite-evolution guide](07-suite-evolution-and-relay-flows.md) for examples of how clients and relays cooperate.
 
+For the relationship to existing encryption, read [why the experimental envelope differs from NIP-44 v2](03-pq-nip44-envelope.md#relationship-to-nip-44). NIP-44 already supports versioning and does not block PQ extensions; the current DM path still uses it for the outer gift wrap.
+
 ## The drafts
 
 | Draft | What it covers | Depends on |
