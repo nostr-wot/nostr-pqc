@@ -4,6 +4,8 @@
 
 This companion to [draft 05](05-relay-crypto-agility.md) explains how encryption can evolve without requiring relays to understand private content. The examples below are design examples, not APIs already available in the extension or SDK. Existing draft-03 bytes and draft-04 calls remain unchanged.
 
+NIP-44 already provides versioned encryption. This guide explores endpoint policy, key/capability discovery and relay admission around evolving methods; it does not introduce versioning to Nostr. The [NIP-44 relationship and migration discussion](03-pq-nip44-envelope.md#relationship-to-nip-44) explains the current local envelope and the alternative of proposing a future NIP-44 version.
+
 ## The model
 
 A relay is content-agnostic within a declared admission policy. It validates the event container, public authentication and resource/access rules. A client understands the application and a signer performs encryption. A recipient authenticates and decrypts the private payload. These responsibilities must remain separate.
