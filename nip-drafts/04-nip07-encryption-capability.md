@@ -106,3 +106,7 @@ This draft does not defend against that, and cannot: a client that has delegated
 ## Reference implementation
 
 [extension provider](https://github.com/nostr-wot/nostr-wot-extension/blob/main/inject.ts) and [extension signer](https://github.com/nostr-wot/nostr-wot-extension/blob/main/src/services/signing/signer.ts) in the extension repository. The consuming side is `signerSupportsPq` in [`@nostr-wot/signers`](https://github.com/nostr-wot/nostr-wot-sdk/tree/main/packages/signers).
+
+## Future suites
+
+The existing `pq` marker and options describe draft 03 only. They do not advertise arbitrary future suites. [Draft 07](07-suite-evolution-and-relay-flows.md) explains exact-suite discovery and authenticated recipient capability requirements as future work; it does not change this API.

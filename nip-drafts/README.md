@@ -8,6 +8,8 @@ Moved from [nostr-wot-extension/nips at 36596f9](https://github.com/nostr-wot/no
 
 Read the [complexity, sizing and interoperability audit](AUDIT.md) before implementing the relay proposals. Reproduce the payload calculations with `node scripts/nip-payload-sizes.mjs` from this repository's root.
 
+Start with the [illustrated suite-evolution guide](07-suite-evolution-and-relay-flows.md) for examples of how clients and relays cooperate.
+
 ## The drafts
 
 | Draft | What it covers | Depends on |
@@ -18,14 +20,15 @@ Read the [complexity, sizing and interoperability audit](AUDIT.md) before implem
 | [04 — Signer capability](04-nip07-encryption-capability.md) | `window.nostr.nip44.schemes`, so a client can ask a signer instead of guessing | NIP-07, 03 |
 | [05 - Relay crypto-agility](05-relay-crypto-agility.md) | Compact envelope selectors, opaque transport, NIP-11 discovery and relay policy | NIP-01, NIP-11, NIP-17, 03 |
 | [06 - Hybrid event authentication](06-hybrid-event-authentication.md) | Candidate dual-signature public events, trust pinning and downgrade handling | NIP-01, 02, 05 |
+| [07 - Suite evolution and flows](07-suite-evolution-and-relay-flows.md) | Adding suites, relay admission parameters, worked examples and SVG diagrams | 03, 04, 05, 06 |
 
-Drafts 01-04 describe existing work. Drafts 05-06 propose the next migration stage.
+Drafts 01-04 describe existing work. Drafts 05-07 propose the next migration stage.
 
 ## Status
 
 **None of these has a NIP number.** They are not submitted to [nostr-protocol/nips](https://github.com/nostr-protocol/nips) yet, and the numbers in the filenames are reading order, nothing more. The one number that is claimed in the wild is the event kind `10203`, which is in use on relays today and would need to change if it collides with something in flight.
 
-Implementation status (05-06 are proposals, not shipped capabilities):
+Implementation status (05-07 are proposals, not shipped capabilities):
 
 | Draft | Implementation |
 |---|---|
@@ -33,7 +36,7 @@ Implementation status (05-06 are proposals, not shipped capabilities):
 | 03 | [extension crypto](https://github.com/nostr-wot/nostr-wot-extension/blob/main/src/lib/crypto/pq.ts) (envelope section), [`@nostr-wot/pq`](https://github.com/nostr-wot/nostr-wot-sdk/tree/main/packages/pq) |
 | 04 | [extension provider](https://github.com/nostr-wot/nostr-wot-extension/blob/main/inject.ts), [extension signer](https://github.com/nostr-wot/nostr-wot-extension/blob/main/src/services/signing/signer.ts), [`@nostr-wot/signers`](https://github.com/nostr-wot/nostr-wot-sdk/tree/main/packages/signers) |
 
-Drafts 05-06 have no implementation or independent interoperability results yet.
+Drafts 05-07 have no implementation or independent interoperability results yet.
 
 [Obelisk](https://github.com/obelisk-app/obelisk) consumes these formats through the shared SDK. This demonstrates integration, not independent wire-format interoperability. Independent conformance vectors remain necessary.
 

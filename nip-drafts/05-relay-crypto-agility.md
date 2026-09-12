@@ -71,6 +71,12 @@ Example only; these values do not describe a deployed relay:
 
 Keep numeric `supported_nips` for actual NIPs implemented; do not put local draft numbers 05 or 06 there. NIP-11 discovery can be absent, stale or dishonest. Clients verify proofs independently and enforce their own minimum policy. Discovery MUST NOT lower a pinned identity's security requirement.
 
+## Admission parameters and worked flows
+
+[Draft 07](07-suite-evolution-and-relay-flows.md) adds an optional proposed `admission` object under the same namespace: `allowed_kinds` controls the advertised kind allowlist and `required_public_proof_kinds` adds per-kind proof requirements. It defines invalid combinations, pinned-policy precedence, suite rollout and end-to-end flows. These are unimplemented proposal fields.
+
+A relay can be content-agnostic while enforcing container and public-proof rules. In particular, ordinary kind-1059 wrappers must not be required to expose a hidden sender proof. A global `require` policy makes a relay unsuitable for those wrappers.
+
 ## Relay processing
 
 1. Bound incoming bytes before JSON parsing and bound tags, strings and proof counts before decoding or expensive cryptography. Rate-limit verification.
