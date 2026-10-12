@@ -49,4 +49,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-[MIT](LICENSE). Maintained by [nostr-wot](https://github.com/nostr-wot).
+[GPL-3.0-only](LICENSE). Maintained by [nostr-wot](https://github.com/nostr-wot).

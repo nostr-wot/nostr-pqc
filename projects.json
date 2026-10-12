@@ -3,8 +3,8 @@
   "name": "nostr-pqc",
   "description": "Index of post-quantum cryptography (PQC) work in the Nostr protocol.",
   "homepage": "https://github.com/nostr-wot/nostr-pqc",
-  "license": "MIT",
-  "note": "Status values: shipped | published | experimental | discussion | closed. Protects values: confidentiality | authenticity. Approach values: hybrid | replacement | n-a.",
+  "license": "GPL-3.0-only",
+  "note": "Status values: shipped | published | experimental | discussion | closed. Protects values: confidentiality | authenticity. Approach values: hybrid | replacement | n-a. License values describe current repository terms; earlier released versions retain their original license terms.",
   "projects": [
     {
       "id": "nostr-wot-extension",
@@ -13,7 +13,7 @@
       "homepage": "https://nostr-wot.com",
       "layer": "client",
       "language": "TypeScript",
-      "license": "MIT",
+      "license": "GPL-3.0-only",
       "version": "0.4.0",
       "pending_version": "0.7.0",
       "pending_store_publication": true,
@@ -59,7 +59,7 @@
       "package": "https://www.npmjs.com/package/@nostr-wot/pq",
       "layer": "library",
       "language": "TypeScript",
-      "license": "MIT",
+      "license": "GPL-3.0-only",
       "version": "0.2.0",
       "status": "published",
       "protects": [
