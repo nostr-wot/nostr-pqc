@@ -27,7 +27,7 @@ authenticity. These need different migration strategies; see the
 
 ## NIP drafts
 
-Protocol proposals live in [nip-drafts/](nip-drafts/README.md), including the [complexity, payload-size and interoperability audit](nip-drafts/AUDIT.md). Drafts 05-06 are unimplemented designs for review.
+Protocol proposals live in [nip-drafts/](nip-drafts/README.md), including the [complexity, payload-size and interoperability audit](nip-drafts/AUDIT.md). Drafts 05-06 are unimplemented designs for review. The separate [passkey-held keys proposals](nip-drafts/passkeys/README.md) cover interoperable identity recovery; they do not provide post-quantum protection.
 
 ## Guides
 

@@ -1,6 +1,6 @@
 # NIP proposals
 
-Draft specifications for implemented post-quantum messaging and proposed relay migration.
+Draft specifications for implemented post-quantum messaging, proposed relay migration and passkey interoperability.
 
 These drafts document the Nostr WoT extension and SDK's experimental formats and proposals for incremental relay migration. They are maintained here so clients, signers and relay implementations can discuss the same specification. No official NIP number is claimed.
 
@@ -12,7 +12,11 @@ Start with the [illustrated suite-evolution guide](07-suite-evolution-and-relay-
 
 For the relationship to existing encryption, read [why the experimental envelope differs from NIP-44 v2](03-pq-nip44-envelope.md#relationship-to-nip-44). NIP-44 already supports versioning and does not block PQ extensions; the current DM path still uses it for the outer gift wrap.
 
-## The drafts
+## Passkey interoperability
+
+[Passkey-held keys and optional vault recovery](passkeys/README.md) define compatible identity recovery across passkey clients, with best practices, an interoperability guide and executable test vectors. These are separate from the post-quantum drafts below and do not provide quantum resistance. They have no assigned NIP numbers; relay kind `31778` is provisional.
+
+## Post-quantum drafts
 
 | Draft | What it covers | Depends on |
 |---|---|---|
@@ -28,7 +32,7 @@ Drafts 01-04 describe existing work. Drafts 05-07 propose the next migration sta
 
 ## Status
 
-**None of these has a NIP number.** They are not submitted to [nostr-protocol/nips](https://github.com/nostr-protocol/nips) yet, and the numbers in the filenames are reading order, nothing more. The one number that is claimed in the wild is the event kind `10203`, which is in use on relays today and would need to change if it collides with something in flight.
+**None of the post-quantum drafts has a NIP number.** They are not submitted to [nostr-protocol/nips](https://github.com/nostr-protocol/nips) yet, and the numbers in the filenames are reading order, nothing more. The one number that is claimed in the wild is the event kind `10203`, which is in use on relays today and would need to change if it collides with something in flight.
 
 Implementation status (05-07 are proposals, not shipped capabilities):
 
